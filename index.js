@@ -1,5 +1,6 @@
 /*
     一、nodejs版本：14.17.0
+    二、运行依赖smartatt-clock登录态cookie与token(配置在config中)
     二、汇总结果字段顺序
         1. eid
         2. 签到付费（1：付费 0：非付费）
@@ -13,6 +14,7 @@
         10. networkId
         11. 工作圈名称
 */
+
 const fs                        = require('fs')
 const { rm, open, writeFile }   = require('fs').promises
 const path                      = require('path')
