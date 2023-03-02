@@ -9,10 +9,11 @@
         5. 权限业务中心开启（1：开启 0：未开启）
         6. 使用过新考勤（1：启用 0：未启用）
         7. 有多条调休假计算方案（1: 是 0：否）
-        8. 使用考勤机（1：使用 2：未使用）
-        9. 迁移状态（1：已迁移 2：不迁移 0：未迁移）
-        10. networkId
-        11. 工作圈名称
+        8. 使用综合工时制签到组（1：是 0：否）
+        9. 使用考勤机（1：使用 2：未使用）
+        10. 迁移状态（1：已迁移 2：不迁移 0：未迁移）
+        11. networkId
+        12. 工作圈名称
 */
 
 const fs                        = require('fs')
@@ -24,6 +25,7 @@ const getQdHuoYue               = require('./lib/check-qdhy')
 const getSpFfInfo               = require('./lib/check-spff')
 const getQxywInfo               = require('./lib/check-qxyw')
 const getUseNew                 = require('./lib/check-useNew')
+const getUseZhgs                = require('./lib/check-useZhgs')
 const getUseMachine             = require('./lib/check-useMachine')
 const getTransStatus            = require('./lib/check-transStatus')
 const getNetworkInfo            = require('./lib/check-networkInfo')
@@ -49,10 +51,11 @@ async function init () {
             let { hasUse, hasMultiRules } = await getUseNew(eid)
             const c6 = hasUse ? 1 : 0
             const c7 = hasMultiRules ? 1: 0
-            const c8 = await getUseMachine(eid)
-            const c9 = await getTransStatus(eid)
-            let { networkId: c10, name: c11 } = await getNetworkInfo(eid)
-            const lineData = `${c1}\t${c2}\t${c3}\t${c4}\t${c5}\t${c6}\t${c7}\t${c8}\t${c9}\t${c10}\t${c11}\n`
+            const c8 = await getUseZhgs(eid)
+            const c9 = await getUseMachine(eid)
+            const c10 = await getTransStatus(eid)
+            let { networkId: c11, name: c12 } = await getNetworkInfo(eid)
+            const lineData = `${c1}\t${c2}\t${c3}\t${c4}\t${c5}\t${c6}\t${c7}\t${c8}\t${c9}\t${c10}\t${c11}\t${c12}\n`
             await writeFile(fd, lineData)
         } catch (err) {
             console.log('%s, 提取信息过程出现异常: %s', eid, err)
